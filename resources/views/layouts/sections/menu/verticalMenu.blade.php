@@ -5,17 +5,19 @@
 
     <!-- ! Hide app brand if navbar-full -->
     <div class="app-brand demo">
-        <a href="{{ url('/') }}" class="app-brand-link">
+        <a href="{{ url('/pencarian') }}" class="app-brand-link">
             <span class="app-brand-logo demo me-1">
-                @include('_partials.macros', ['height' => 20])
+                {{-- Mengganti <image> menjadi <img> --}}
+                <img src="{{ asset('assets/img/logo-text.png') }}" alt="Logo PLN" height="40">
             </span>
-            <span class="app-brand-text demo menu-text fw-semibold ms-2">{{ config('variables.templateName') }}</span>
+            <span class="app-brand-text demo menu-text fw-semibold ms-2"></span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
             <i class="menu-toggle-icon d-xl-block align-middle"></i>
         </a>
     </div>
+
 
     <div class="menu-inner-shadow"></div>
 

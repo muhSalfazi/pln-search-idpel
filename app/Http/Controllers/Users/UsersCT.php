@@ -75,29 +75,26 @@ class UsersCT extends Controller
   // Mengambil data untuk DataTables
   public function getData(Request $request)
   {
-    // Query hanya kolom tertentu
-    $query = User::select('username', 'email', 'alamat', 'no_telp', 'jabatan')
-      ->orderBy('created_at', 'desc');
+    try {
+      $query = User::where('role', 'user')  // Filter hanya role user
+        ->select(['username', 'email', 'alamat', 'no_telp', 'jabatan']);
 
-    return DataTables::of($query)
-      ->addIndexColumn()
-      ->editColumn('username', function ($user) {
-        return $user->username ?? '<span class="text-muted">Tidak ditemukan</span>';
-      })
-      ->editColumn('email', function ($user) {
-        return $user->email ?? '<span class="text-muted">-</span>';
-      })
-      ->editColumn('alamat', function ($user) {
-        return $user->alamat ?? '<span class="text-muted">-</span>';
-      })
-      ->editColumn('no_telp', function ($user) {
-        return $user->no_telp ?? '<span class="text-muted">-</span>';
-      })
-      ->editColumn('jabatan', function ($user) {
-        return $user->jabatan ?? '<span class="text-muted">-</span>';
-      })
-      ->rawColumns(['username', 'email', 'alamat', 'no_telp', 'jabatan'])
-      ->make(true);
+      return DataTables::of($query)
+        ->addIndexColumn()  // Tambahkan index otomatis
+        ->editColumn('alamat', function ($user) {
+          return $user->alamat ?? '<span class="text-muted">-</span>';
+        })
+        ->editColumn('no_telp', function ($user) {
+          return $user->no_telp ?? '<span class="text-muted">-</span>';
+        })
+        ->editColumn('jabatan', function ($user) {
+          return $user->jabatan ?? '<span class="text-muted">-</span>';
+        })
+        ->rawColumns(['alamat', 'no_telp', 'jabatan'])
+        ->toJson();
+    } catch (\Exception $e) {
+      return response()->json(['error' => $e->getMessage()], 500);  // Tampilkan error sebagai JSON
+    }
   }
 
 }
