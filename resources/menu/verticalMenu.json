@@ -1,0 +1,72 @@
+{
+  "menu": [
+    {
+      "url": "pencarian",
+      "name": "Pencarian",
+      "icon": "menu-icon tf-icons ri-search-line",
+      "slug": "pencarian"
+    },
+    {
+      "name": "Riwayat",
+      "icon": "menu-icon tf-icons ri-history-line",
+      "slug": "riwayat",
+      "url": "riwayat"
+    },
+    {
+      "menuHeader": "Admin"
+    },
+    {
+      "url": "users",
+      "icon": "menu-icon tf-icons ri-user-line",
+      "name": "Users",
+      "slug": "users"
+    },
+    {
+      "name": "Account Settings",
+      "icon": "menu-icon tf-icons ri-layout-left-line",
+      "slug": "pages-account-settings",
+      "submenu": [
+        {
+          "url": "pages/account-settings-account",
+          "name": "Account",
+          "slug": "pages-account-settings-account"
+        },
+        {
+          "url": "pages/account-settings-notifications",
+          "name": "Notifications",
+          "slug": "pages-account-settings-notifications"
+        },
+        {
+          "url": "pages/account-settings-connections",
+          "name": "Connections",
+          "slug": "pages-account-settings-connections"
+        }
+      ]
+    },
+    {
+      "name": "Authentications",
+      "icon": "menu-icon tf-icons ri-shield-keyhole-line",
+      "slug": "auth",
+      "submenu": [
+        {
+          "url": "auth/login-basic",
+          "name": "Login",
+          "slug": "auth-login-basic",
+          "target": "_blank"
+        },
+        {
+          "url": "auth/register-basic",
+          "name": "Register",
+          "slug": "auth-register-basic",
+          "target": "_blank"
+        },
+        {
+          "url": "auth/forgot-password-basic",
+          "name": "Forgot Password",
+          "slug": "auth-forgot-password-basic",
+          "target": "_blank"
+        }
+      ]
+    }
+  ]
+}
