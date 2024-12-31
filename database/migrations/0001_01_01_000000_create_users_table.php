@@ -14,17 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->string('username');
             $table->string('email')->unique();
-            $table->string('email_verified_at')->nullable();
+            // $table->string('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['user', 'admin'])->default('user');
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->timestamps();
         });
 
-        // Schema::create('password_reset_tokens', function (Blueprint $table) {
-        //     $table->string('email')->primary();
-        //     $table->string('token');
-        //     $table->timestamp('created_at')->nullable();
-        // });
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();

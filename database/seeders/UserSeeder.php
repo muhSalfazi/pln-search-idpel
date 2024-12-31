@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
       'email' => 'admin@mail.com',
       'password' => Hash::make('admin12345'),
       'role' => 'admin',
+        'status' => 'aktif'
     ]);
 
     //role user
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
       'email' => 'user@mail.com',
       'password' => Hash::make('user12345'),
       'role' => 'user',
+        'status' => 'aktif'
     ]);
   }
 }

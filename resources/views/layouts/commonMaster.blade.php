@@ -71,6 +71,33 @@
         });
     </script>
 
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Yakin ingin logout?',
+                text: "Anda akan keluar dari sesi ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Logout!',
+                cancelButtonText: 'Batal',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logoutForm').submit();
+                }
+            });
+        });
+    </script>
+    
+
 
 </body>
 

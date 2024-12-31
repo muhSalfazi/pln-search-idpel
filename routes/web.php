@@ -32,6 +32,8 @@ Route::middleware([RedirectIfAuthenticated::class, PreventBack::class])->group(f
   Route::get('/register', [RegisterBasic::class, 'index'])->name('auth-register-basic');
   Route::get('/forgot-password', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
   Route::post('/login', [LoginBasic::class, 'login'])->name('login');
+  Route::post('/users/activate/{id}', [UsersCT::class, 'activateUser'])->name('users.activate');
+
 
   // post register user
   Route::post('/registerstore', [RegisterBasic::class, 'store'])->name('register-user');
@@ -62,6 +64,9 @@ Route::middleware([Authenticate::class . ':admin'])->group(function () {
   // tables
   Route::get('/users', [UsersCT::class, 'index'])->name('users');
   Route::get('/users/data', [UsersCT::class, 'getData'])->name('users.data');
+
+  Route::patch('/users/status/{id}', [UsersCT::class, 'updateStatus']);
+Route::post('/users/update-password', [UsersCT::class, 'updatePassword'])->name('users.update-password');
 });
 // extended ui
 Route::get('/extended/ui-perfect-scrollbar', [PerfectScrollbar::class, 'index'])->name('extended-ui-perfect-scrollbar');

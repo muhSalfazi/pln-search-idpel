@@ -86,12 +86,6 @@
                         <span class="align-middle">My Profile</span>
                     </a>
                 </li>
-                <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <i class='ri-settings-4-line ri-22px me-2'></i>
-                        <span class="align-middle">Settings</span>
-                    </a>
-                </li>
                 {{-- <li>
                     <a class="dropdown-item" href="javascript:void(0);">
                         <span class="d-flex align-items-center align-middle">

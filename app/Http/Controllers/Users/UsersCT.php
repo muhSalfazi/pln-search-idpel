@@ -7,94 +7,75 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
 
-
 class UsersCT extends Controller
 {
-  public function index(Request $request)
+  public function index()
   {
-    if ($request->ajax()) {
-      $totalData = User::count();
-      $totalFiltered = $totalData;
-
-      $limit = $request->input('length') ?: 10;
-      $start = $request->input('start') ?: 0;
-      $orderColumn = $request->input('order.0.column', 1);
-      $orderDir = $request->input('order.0.dir', 'asc');
-
-      $columns = [
-        1 => 'username',
-        2 => 'email',
-        3 => 'alamat',
-        4 => 'no_telp',
-        5 => 'jabatan'
-      ];
-
-      $order = $columns[$orderColumn] ?? 'created_at';
-
-      $query = User::query();
-
-      // Pencarian
-      if ($search = $request->input('search.value')) {
-        $query->where('username', 'LIKE', "%{$search}%")
-          ->orWhere('email', 'LIKE', "%{$search}%")
-          ->orWhere('alamat', 'LIKE', "%{$search}%")
-          ->orWhere('no_telp', 'LIKE', "%{$search}%")
-          ->orWhere('jabatan', 'LIKE', "%{$search}%");
-        $totalFiltered = $query->count();
-      }
-
-      $users = $query->offset($start)
-        ->limit($limit)
-        ->orderBy($order, $orderDir)
-        ->get();
-
-      $data = [];
-      $fakeId = $start + 1;
-
-      foreach ($users as $user) {
-        $nestedData['fake_id'] = $fakeId++;
-        $nestedData['username'] = $user->username ?? '-';
-        $nestedData['email'] = $user->email ?? '-';
-        $nestedData['alamat'] = $user->alamat ?? '-';
-        $nestedData['no_telp'] = $user->no_telp ?? '-';
-        $nestedData['jabatan'] = $user->jabatan ?? '-';
-        $data[] = $nestedData;
-      }
-
-      return response()->json([
-        'draw' => intval($request->input('draw')),
-        'recordsTotal' => $totalData,
-        'recordsFiltered' => $totalFiltered,
-        'data' => $data
-      ]);
-    }
-
     return view('content.Users.Users');
   }
 
-  // Mengambil data untuk DataTables
+  // Mengambil data untuk DataTables (Hanya role user)
   public function getData(Request $request)
   {
-    try {
-      $query = User::where('role', 'user')  // Filter hanya role user
-        ->select(['username', 'email', 'alamat', 'no_telp', 'jabatan']);
+    if ($request->ajax()) {
+      $query = User::select(['id', 'username', 'email', 'no_telp', 'alamat', 'jabatan', 'role', 'status'])
+        ->where('role', 'user');
 
       return DataTables::of($query)
-        ->addIndexColumn()  // Tambahkan index otomatis
-        ->editColumn('alamat', function ($user) {
-          return $user->alamat ?? '<span class="text-muted">-</span>';
+        ->addIndexColumn()
+        ->editColumn('status', function ($user) {
+          $checked = $user->status == 'aktif' ? 'checked' : '';
+          $statusText = $user->status == 'aktif' ? 'Aktif' : 'Nonaktif';
+          $btnClass = $user->status == 'aktif' ? 'btn-success' : 'btn-danger';
+
+          return '
+                  <div class="d-flex align-items-center justify-content-center">
+                      <button class="btn toggle-status ' . $btnClass . '" data-id="' . $user->id . '">
+                          ' . $statusText . '
+                      </button>
+                  </div>
+              ';
         })
-        ->editColumn('no_telp', function ($user) {
-          return $user->no_telp ?? '<span class="text-muted">-</span>';
+        ->addColumn('aksi', function ($user) {
+          return '
+                    <button class="btn btn-primary btn-sm edit-password" data-id="' . $user->id . '" data-name="' . $user->username . '">
+                        Edit Password
+                    </button>
+                ';
         })
-        ->editColumn('jabatan', function ($user) {
-          return $user->jabatan ?? '<span class="text-muted">-</span>';
-        })
-        ->rawColumns(['alamat', 'no_telp', 'jabatan'])
+        ->rawColumns(['status', 'aksi'])
         ->toJson();
-    } catch (\Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 500);  // Tampilkan error sebagai JSON
     }
+  }
+  public function updateStatus(Request $request, $id)
+  {
+    $user = User::findOrFail($id);
+    $user->status = $request->status;
+    $user->save();
+
+    return response()->json(['message' => 'Status pengguna berhasil diperbarui']);
+  }
+
+  public function updatePassword(Request $request)
+  {
+    $request->validate([
+      'password' => 'required|min:8|confirmed',
+      'user_id' => 'required|exists:users,id'
+    ]);
+
+    $user = User::findOrFail($request->user_id);
+    $user->password = bcrypt($request->password);
+    $user->save();
+
+    return redirect()->back()->with('success', 'Password berhasil diperbarui.');
+  }
+
+  public function activateUser($id)
+  {
+    $user = User::findOrFail($id);
+    $user->update(['status' => 'aktif']);
+
+    return redirect()->back()->with('success', 'Akun berhasil diaktifkan kembali.');
   }
 
 }
