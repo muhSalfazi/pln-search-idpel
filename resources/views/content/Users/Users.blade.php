@@ -10,6 +10,7 @@
 @endsection
 
 @section('vendor-script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
@@ -25,6 +26,12 @@
 @endsection
 
 @section('content')
+<style>
+  .swal2-popup-custom {
+      z-index: 2060 !important;
+      /* Pastikan lebih tinggi dari modal Bootstrap */
+  }
+</style>
     <!-- Bordered Table -->
     <div class="card">
         <h5 class="card-header">Data Users</h5>
@@ -122,65 +129,4 @@
         });
     </script>
 
-    {{-- sweet alert --}}
-    <script>
-      if (typeof Swal === 'undefined') {
-          document.write('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"><\/script>');
-      }
-      // Trigger SweetAlert after loader is hidden
-      @if (session('success'))
-          Swal.fire({
-              icon: 'success',
-              title: 'Berhasil',
-              text: '{!! session('success') !!}',
-              confirmButtonText: 'OK',
-              showClass: {
-                  popup: 'animate_animated animate_bounceInDown' // Menambahkan animasi muncul
-              },
-              hideClass: {
-                  popup: 'animate_animated animate_fadeOutUp' // Menambahkan animasi saat ditutup
-              },
-              customClass: {
-                  popup: 'small-swal-popup'
-              },
-          });
-      @endif
-
-      @if (session('error'))
-          Swal.fire({
-              icon: 'error',
-              title: 'Gagal',
-              text: '{!! session('error') !!}',
-              confirmButtonText: 'OK',
-              showClass: {
-                  popup: 'animate_animated animate_fadeIn' // Animasi muncul
-              },
-              hideClass: {
-                  popup: 'animate_animated animate_zoomOut' // Animasi saat ditutup
-              },
-              customClass: {
-                  popup: 'small-swal-popup'
-              },
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  Swal.fire({
-                      icon: 'info',
-                      title: 'Informasi',
-                      text: 'Silakan isi form kembali.',
-                      confirmButtonText: 'OK',
-                      showClass: {
-                          popup: 'animate_animated animate_fadeIn' // Animasi muncul
-                      },
-                      hideClass: {
-                          popup: 'animate_animated animate_zoomOut' // Animasi saat ditutup
-                      },
-                      customClass: {
-                          popup: 'small-swal-popup'
-                      },
-                  });
-              }
-          });
-      @endif
-  </script>
-  {{-- end sweetalert --}}
 @endsection

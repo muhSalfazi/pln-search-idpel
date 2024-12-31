@@ -56,7 +56,9 @@
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
-                    <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                    {{-- <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle"> --}}
+                    <img src="{{ asset(Auth::user()->avatar ?? 'assets/img/avatars/1.png') }}" alt="user-avatar"
+                        class="w-px-40 h-auto rounded-circle" />
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
@@ -65,12 +67,22 @@
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0 me-2">
                                 <div class="avatar avatar-online">
-                                    <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                        class="w-px-40 h-auto rounded-circle">
+                                    {{-- <img src="{{ asset('assets/img/avatars/1.png') }}" alt
+                                        class="w-px-40 h-auto rounded-circle"> --}}
+                                    <img src="{{ asset(Auth::user()->avatar ?? 'assets/img/avatars/1.png') }}"
+                                        alt="user-avatar" class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </div>
                             <div class="flex-grow-1">
-                                <h6 class="mb-0 small">{{ Auth::user()->username }}</h6>
+                                <h6 class="mb-0 small">
+                                    <!-- Cek jika first_name dan last_name tidak kosong -->
+                                    @if (Auth::user()->first_name && Auth::user()->last_name)
+                                        {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
+                                    @else
+                                        <!-- Jika first_name atau last_name kosong, tampilkan username -->
+                                        {{ Auth::user()->username }}
+                                    @endif
+                                </h6>
                                 <small class="text-muted">{{ ucfirst(Auth::user()->role) }}</small>
                             </div>
 
@@ -80,12 +92,14 @@
                 <li>
                     <div class="dropdown-divider"></div>
                 </li>
-                <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <i class="ri-user-3-line ri-22px me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                    </a>
-                </li>
+                @if (Auth::check() && in_array(Auth::user()->role, ['user']))
+                    <li>
+                        <a class="dropdown-item" href="{{ route('account-settings') }}">
+                            <i class="ri-user-3-line ri-22px me-2"></i>
+                            <span class="align-middle">My Profile</span>
+                        </a>
+                    </li>
+                @endif
                 {{-- <li>
                     <a class="dropdown-item" href="javascript:void(0);">
                         <span class="d-flex align-items-center align-middle">

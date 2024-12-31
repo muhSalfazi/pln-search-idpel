@@ -22,67 +22,66 @@
 
 
 @section('content')
-{{-- sweet alert --}}
-<script>
-    if (typeof Swal === 'undefined') {
-        document.write('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"><\/script>');
-    }
-    // Trigger SweetAlert after loader is hidden
-    @if (session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: '{!! session('success') !!}',
-            confirmButtonText: 'OK',
-            showClass: {
-                popup: 'animate_animated animate_bounceInDown' // Menambahkan animasi muncul
-            },
-            hideClass: {
-                popup: 'animate_animated animate_fadeOutUp' // Menambahkan animasi saat ditutup
-            },
-            customClass: {
-                popup: 'small-swal-popup'
-            },
-        });
-    @endif
-
-    @if (session('error'))
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal',
-            text: '{!! session('error') !!}',
-            confirmButtonText: 'OK',
-            showClass: {
-                popup: 'animate_animated animate_fadeIn' // Animasi muncul
-            },
-            hideClass: {
-                popup: 'animate_animated animate_zoomOut' // Animasi saat ditutup
-            },
-            customClass: {
-                popup: 'small-swal-popup'
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Informasi',
-                    text: 'Silakan isi form kembali.',
-                    confirmButtonText: 'OK',
-                    showClass: {
-                        popup: 'animate_animated animate_fadeIn' // Animasi muncul
-                    },
-                    hideClass: {
-                        popup: 'animate_animated animate_zoomOut' // Animasi saat ditutup
-                    },
-                    customClass: {
-                        popup: 'small-swal-popup'
-                    },
-                });
-            }
-        });
-    @endif
-</script>
-{{-- end sweetalert --}}
+    {{-- sweet alert --}}
+    <script>
+        if (typeof Swal === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"><\/script>');
+        }
+        // Trigger SweetAlert after loader is hidden
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{!! session('success') !!}',
+                confirmButtonText: 'OK',
+                showClass: {
+                    popup: 'animate_animated animate_bounceInDown' // Menambahkan animasi muncul
+                },
+                hideClass: {
+                    popup: 'animate_animated animate_fadeOutUp' // Menambahkan animasi saat ditutup
+                },
+                customClass: {
+                    popup: 'small-swal-popup'
+                },
+            });
+        @endif
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{!! session('error') !!}',
+                confirmButtonText: 'OK',
+                showClass: {
+                    popup: 'animate_animated animate_fadeIn' // Animasi muncul
+                },
+                hideClass: {
+                    popup: 'animate_animated animate_zoomOut' // Animasi saat ditutup
+                },
+                customClass: {
+                    popup: 'small-swal-popup'
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Informasi',
+                        text: 'Silakan isi form kembali.',
+                        confirmButtonText: 'OK',
+                        showClass: {
+                            popup: 'animate_animated animate_fadeIn' // Animasi muncul
+                        },
+                        hideClass: {
+                            popup: 'animate_animated animate_zoomOut' // Animasi saat ditutup
+                        },
+                        customClass: {
+                            popup: 'small-swal-popup'
+                        },
+                    });
+                }
+            });
+        @endif
+    </script>
+    {{-- end sweetalert --}}
     <div class="container">
         <section class="section register min-vh-80 d-flex flex-column align-items-center justify-content-center py-4">
             <div class="container">

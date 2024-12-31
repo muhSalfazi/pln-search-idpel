@@ -13,6 +13,22 @@ class RiwayatCT extends Controller
   // Tampilkan halaman utama
   public function index(Request $request)
   {
+    // cek user apakah sudah komplit data profil
+    $user = Auth::user();
+
+    if ($user->role === 'user' && (
+        is_null($user->first_name) || 
+        is_null($user->last_name) || 
+        is_null($user->avatar) || 
+        is_null($user->alamat) || 
+        is_null($user->no_telp) ||
+        is_null($user->jabatan) ||
+        is_null($user->kecamatan) ||
+        is_null($user->desa)
+    )){
+      return redirect()->route('account-settings') // Redirect to the account settings page
+          ->with('alert', 'Anda belum mengisi profil lengkap. Silakan lengkapi data Anda.'); // Show alert
+  }
     if ($request->ajax()) {
       // Handle request dari DataTables AJAX
       $columns = [

@@ -1,12 +1,38 @@
 @extends('layouts/blankLayout')
 
-@section('title', 'Login Basic - Pages')
+@section('title', 'Login')
 
 @section('page-style')
     @vite(['resources/assets/vendor/scss/pages/page-auth.scss'])
 @endsection
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- sweet alert --}}
+    <script>
+        if (typeof Swal === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"><\/script>');
+        }
+        // Trigger SweetAlert after loader is hidden
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{!! session('success') !!}',
+                confirmButtonText: 'OK',
+                showClass: {
+                    popup: 'animate_animated animate_bounceInDown' // Menambahkan animasi muncul
+                },
+                hideClass: {
+                    popup: 'animate_animated animate_fadeOutUp' // Menambahkan animasi saat ditutup
+                },
+                customClass: {
+                    popup: 'small-swal-popup'
+                },
+            });
+        @endif
+    </script>
     <div class="position-relative">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner py-6 mx-4">
@@ -17,9 +43,10 @@
                     <div class="app-brand justify-content-center mt-5">
                         <a href
 =             "{{ url('/') }}" class="app-brand-link gap-3">
-                            <span class="app-brand-logo demo">   <img src="{{ asset('assets/img/logo-text.png') }}" alt="Logo PLN" height="50"></span>
+                            <span class="app-brand-logo demo"> <img src="{{ asset('assets/img/logo-text.png') }}"
+                                    alt="Logo PLN" height="50"></span>
                             {{-- <span --}}
-                                {{-- class="app-brand-text demo text-heading fw-semibold">{{ config('variables.templateName') }}</span> --}}
+                            {{-- class="app-brand-text demo text-heading fw-semibold">{{ config('variables.templateName') }}</span> --}}
                         </a>
                     </div>
                     <!-- /Logo -->
@@ -51,11 +78,11 @@
                             </div>
                             {{-- <div class="mb-1 pb-2 d-flex justify-content-between pt-2 align-items-center"> --}}
                             <!-- <div class="form-check mb-0">
-                    <input class="form-check-input" type="checkbox" id="remember-me">
-                    <label class="form-check-label" for="remember-me">
-                      Remember Me
-                    </label>
-                  </div> -->
+                            <input class="form-check-input" type="checkbox" id="remember-me">
+                            <label class="form-check-label" for="remember-me">
+                              Remember Me
+                            </label>
+                          </div> -->
                             {{-- <a href="{{url('/forgot-password')}}" class="float-end mb-1">
                 <span>Forgot Password?</span>
               </a> --}}
