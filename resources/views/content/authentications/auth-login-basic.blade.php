@@ -52,7 +52,7 @@
                     <!-- /Logo -->
 
                     <div class="card-body mt-1">
-                        <h4 class="mb-1">Welcome to {{ config('variables.templateName') }}! 👋🏻</h4>
+                        {{-- <h4 class="mb-1">Welcome to {{ config('variables.templateName') }}! 👋🏻</h4> --}}
                         <p class="mb-5">Please sign-in to your account and start the adventure</p>
 
                         <form id="formAuthentication" class="mb-5" action="{{ route('login') }}" method="POST">
@@ -76,17 +76,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="mb-1 pb-2 d-flex justify-content-between pt-2 align-items-center"> --}}
-                            <!-- <div class="form-check mb-0">
-                            <input class="form-check-input" type="checkbox" id="remember-me">
-                            <label class="form-check-label" for="remember-me">
-                              Remember Me
-                            </label>
-                          </div> -->
-                            {{-- <a href="{{url('/forgot-password')}}" class="float-end mb-1">
-                <span>Forgot Password?</span>
-              </a> --}}
-                            {{-- </div> --}}
                             @if (session('error'))
                                 <div class="alert alert-danger mt-1">
                                     {{ session('error') }}
@@ -106,13 +95,10 @@
                     </div>
                 </div>
                 <!-- /Login -->
-                <img src="{{ asset('assets/img/illustrations/tree-3.png') }}" alt="auth-tree
-       "
+                <img src="{{ asset('assets/img/pln2.png') }}" style="width: 30%" alt="auth-tree"
                     class="authentication-image-object-left d-none d-lg-block">
-                <img src="{{ asset('assets/img/illustrations/auth-basic-mask-light.png') }}
-       "
-                    class="authentication-image d-none d-lg-block" height="172" alt="trian
- g      le-bg">
+                <img src="{{ asset('assets/img/illustrations/auth-basic-mask-light.png') }} "
+                    class="authentication-image d-none d-lg-block" height="172" alt="triang le-bg">
                 <img src="{{ asset('assets/img/illustrations/tree.png') }}" alt="auth-tree"
                     class="authentication-image-object-right d-none d-lg-block">
             </div>
